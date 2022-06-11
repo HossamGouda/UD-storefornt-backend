@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import config from '../config';
 import UserModel from '../models/user.model';
+import jwt from 'jsonwebtoken'
 
 const userModel = new UserModel();
 // eslint-disable-next-line prettier/prettier
@@ -86,4 +88,30 @@ export const deleteUser = async (
   } catch (err) {
     next(err);
   }
-};
+}
+
+export const auth=async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body
+
+    const user = await userModel.auth(email, password)
+    const token = jwt.sign({ user }, config.tokenSecret as unknown as string)
+    if (!user) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'the username and password do not match please try again',
+      })
+    }
+    return res.json({
+      status: 'success',
+      data: { ...user, token },
+      message: 'user authenticated successfully',
+    })
+  } catch (err) {
+    return next(err)
+  }
+}
