@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const {
   PORT,
@@ -11,7 +11,7 @@ const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   ENV,
-} = process.env
+} = process.env;
 
 export default {
   port: PORT,
@@ -20,4 +20,4 @@ export default {
   database: ENV === 'dev' ? POSTGRES_DB : POSTGRES_DB_TEST,
   user: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
-}
+};
