@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var server_1 = __importDefault(require("../../server"));
 var request = (0, supertest_1.default)(server_1.default);
-describe('Test for the Home endpoint server', function () {
+describe('Test for the main endpoint server', function () {
     it('testing the response of server', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {

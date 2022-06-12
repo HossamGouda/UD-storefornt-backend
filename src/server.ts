@@ -3,11 +3,9 @@ import morgan from 'morgan';
 import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import errorHandler from './middleware/errorhandler';
-import db from './database/database';
 import routes from './routes/index';
-// import bodyparser from 'body-parser'
-dotenv.config();
 
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 // create an instance server
 const app: Application = express();
@@ -15,36 +13,21 @@ const app: Application = express();
 app.use(morgan('short'));
 
 app.use(helmet());
+
+//using express parsing insteated of body-parser
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(bodyparser())
+
 app.use('/api', routes);
-
-// add routing for / path
-// app.get('/', (req: Request, res: Response) => {
-//   throw new Error(' Erro happend while loading');
-
-//   res.send('Welcom to Storefront Project');
-// });
-
-// db.connect().then((client) => {
-//   return client
-//     .query('SELECT NOW()')
-//     .then((res) => {
-//       client.release();
-//       console.log(res.rows);
-//     })
-//     .catch((err) => {
-//       client.release();
-//       console.log(err.message);
-//     });
-// });
+app.get('/', (req: Request, res: Response) => {
+  res.send(' Welcom to Storefornt UD Project  ');
+});
 
 app.use(errorHandler);
 
 app.use((req: Request, res: Response) => {
-  res.status(404).json({ message: 'not availanle' });
+  res.status(404).json({ message: 'this route is not available' });
 });
-
 // start express server
 app.listen(PORT, () => {
   console.log(`Server is starting at prot:${PORT}`);

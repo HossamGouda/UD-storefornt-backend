@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx tsc && jasmine",
+    "test": "set ENV=test && db-migrate up --env test &&  tsc && jasmine && db-migrate reset",
     "dev": "nodemon ./src/server.ts",
     "clean": "rimraf build/",
     "build": "yarn clean && npx tsc",
