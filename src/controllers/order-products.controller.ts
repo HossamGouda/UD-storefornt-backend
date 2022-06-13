@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import OrderProductModel from '../models/order-products.model';
 
-
-
 const orderProductModel = new OrderProductModel();
 // eslint-disable-next-line prettier/prettier
 export const create = async (
@@ -28,7 +26,7 @@ export const getoneOrder = async (
 ) => {
   try {
     const orderProduct = await orderProductModel.index(
-      req.params.id as unknown as string
+      req.params.id as unknown as number
     );
     res.json({
       status: 'success',
@@ -77,16 +75,18 @@ export const deleteOrder = async (
   }
 };
 
-export const show= async (req: Request, res: Response, next: NextFunction) => {
+export const show = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const orderProduct = await orderProductModel.show(req.body.orderId, req.body.productId);
+    const orderProduct = await orderProductModel.show(
+      req.body.orderId,
+      req.body.productId
+    );
     res.json({
       status: 'success',
       data: { orderProduct },
-      message: 'Product at target Order retrieved successfully'
+      message: 'Product at target Order retrieved successfully',
     });
   } catch (err) {
     next(err);
   }
-});
-
+};

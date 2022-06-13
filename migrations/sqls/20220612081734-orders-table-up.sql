@@ -1,6 +1,5 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE TABLE orders(
-  id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-  status VARCHAR(50),
-  user_id VARCHAR(250) REFERENCES users(id) NOT Null
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(100),
+    user_id bigint NOT NULL REFERENCES users(id)
 );

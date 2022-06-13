@@ -45,7 +45,7 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    const user = await userModel.user(req.params.id as unknown as string);
+    const user = await userModel.user(req.params.id as unknown as number);
     res.json({
       status: 'success',
       data: user,
@@ -79,7 +79,7 @@ export const deleteUser = async (
   next: NextFunction
 ) => {
   try {
-    const user = await userModel.deleteUser(req.params.id as unknown as string);
+    const user = await userModel.deleteUser(req.params.id as unknown as number);
     res.json({
       status: 'success',
       data: user,

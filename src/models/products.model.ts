@@ -25,7 +25,7 @@ class ProductModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `SELECT id ,name,price,category from products`;
+      const sql = `SELECT * from products`;
       //run query
 
       const result = await cnx.query(sql);
@@ -38,7 +38,7 @@ class ProductModel {
     }
   }
   //get specifc product
-  async getOneProduct(id: string): Promise<Product> {
+  async getOneProduct(id: number): Promise<Product> {
     try {
       //opn cnx
       const cnx = await db.connect();
@@ -72,7 +72,7 @@ class ProductModel {
 
   //delete product
 
-  async deleteProduct(id: string): Promise<Product> {
+  async deleteProduct(id: number): Promise<Product> {
     try {
       //opn cnx
       const cnx = await db.connect();

@@ -44,7 +44,7 @@ export const getoneOrder = async (
 ) => {
   try {
     const order = await orderModel.getOneOrder(
-      req.params.id as unknown as string
+      req.params.id as unknown as number
     );
     res.json({
       status: 'success',
@@ -80,7 +80,7 @@ export const deleteOrder = async (
 ) => {
   try {
     const order = await orderModel.deleteOrder(
-      req.params.id as unknown as string
+      req.params.id as unknown as number
     );
     res.json({
       status: 'success',

@@ -1,10 +1,10 @@
 import Product from './products.types';
 
 type OrderProduct = {
-  id?: string;
+  id?: number;
   quantity: number;
-  orderId: string;
-  productId: string;
+  orderId: number;
+  productId: number;
   products?: Product[];
 };
 

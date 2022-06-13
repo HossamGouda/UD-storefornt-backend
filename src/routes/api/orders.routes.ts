@@ -3,10 +3,7 @@ import * as controllers from '../../controllers/order.controller';
 import validateMiddleware from '../../middleware/authenticate';
 
 const routes = Router();
-routes
-  .route('/')
-  .get(validateMiddleware, controllers.getAllOrders)
-  .post(controllers.create);
+routes.route('/').get(controllers.getAllOrders).post(controllers.create);
 routes
   .route('/:id')
   .get(controllers.getoneOrder)

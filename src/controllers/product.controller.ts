@@ -44,7 +44,7 @@ export const getoneProduct = async (
 ) => {
   try {
     const product = await productModel.getOneProduct(
-      req.params.id as unknown as string
+      req.params.id as unknown as number
     );
     res.json({
       status: 'success',
@@ -80,7 +80,7 @@ export const deleteProduct = async (
 ) => {
   try {
     const product = await productModel.deleteProduct(
-      req.params.id as unknown as string
+      req.params.id as unknown as number
     );
     res.json({
       status: 'success',

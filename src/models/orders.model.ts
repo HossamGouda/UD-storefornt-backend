@@ -38,7 +38,7 @@ class OrderModel {
     }
   }
   //get specifc order
-  async getOneOrder(id: string): Promise<Order> {
+  async getOneOrder(id: number): Promise<Order> {
     try {
       //opn cnx
       const cnx = await db.connect();
@@ -72,7 +72,7 @@ class OrderModel {
 
   //delete order
 
-  async deleteOrder(id: string): Promise<Order> {
+  async deleteOrder(id: number): Promise<Order> {
     try {
       //opn cnx
       const cnx = await db.connect();
