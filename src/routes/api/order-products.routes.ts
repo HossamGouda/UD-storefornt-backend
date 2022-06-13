@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../../controllers/order-products.controller';
+import validateMiddleware from '../../middleware/authenticate';
 
 const routes = Router();
 routes.route('/:id').post(controllers.create);

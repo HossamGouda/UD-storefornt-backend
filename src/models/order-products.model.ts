@@ -41,7 +41,7 @@ class OrderProductModel {
     }
   }
 
-  async show(orderId: number, productId: number): Promise<OrderProduct> {
+  async show(orderId: string, productId: string): Promise<OrderProduct> {
     try {
       const connection = await db.connect();
       const sql =

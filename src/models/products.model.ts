@@ -63,7 +63,10 @@ class ProductModel {
   async updateProduct(p: Product): Promise<Product> {
     try {
       const cnx = await db.connect();
-      const sql = `UPDATE products SET name=$2 ,description=$3 ,price=$4, category=$5 WHERE id=($1) RETURNING *`;
+      const sql = `UPDATE products 
+                  SET name=$2, description=$3, price=$4, category=$5
+                  WHERE id=$1 
+                  RETURNING *`;
       //run query
       const result = await cnx.query(sql, [
         p.id,

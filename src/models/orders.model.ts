@@ -7,7 +7,7 @@ class OrderModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `INSERT INTO orders (status, user_id) `;
+      const sql = `INSERT INTO orders (status, user_id) VALUES ($1 ,$2) RETURNING * `;
       //run query
       const result = await cnx.query(sql, [o.status, o.user_id]);
       //close cnx
@@ -25,7 +25,11 @@ class OrderModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `SELECT id ,status,price,user_id from orders`;
+      const sql = `SELECT orders.*,
+			array_agg(row_to_json(order_products)) AS items
+			FROM orders
+			FULL JOIN order_products ON orders.id = order_products.order_id
+			GROUP BY orders.id`;
       //run query
 
       const result = await cnx.query(sql);
@@ -58,9 +62,9 @@ class OrderModel {
   async updateOrder(o: Order): Promise<Order> {
     try {
       const cnx = await db.connect();
-      const sql = `UPDATE orders SET name=$1, price=$2, category=$3  WHERE id=($4) RETURNING id, email, user_name, first_name, last_name`;
+      const sql = `UPDATE orders SET status=($2) WHERE id=($1) RETURNING *`;
       //run query
-      const result = await cnx.query(sql, [o.status, o.user_id]);
+      const result = await cnx.query(sql, [o.id, o.status]);
       cnx.release();
       return result.rows[0];
     } catch (error) {
@@ -76,7 +80,7 @@ class OrderModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `DELETE FROM orders WHERE id= ($1) RETURNING id, status, user_id`;
+      const sql = `DELETE FROM orders WHERE id= ($1) RETURNING *`;
       //run query
 
       const result = await cnx.query(sql, [id]);

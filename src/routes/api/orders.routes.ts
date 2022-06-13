@@ -6,8 +6,8 @@ const routes = Router();
 routes.route('/').get(controllers.getAllOrders).post(controllers.create);
 routes
   .route('/:id')
-  .get(controllers.getoneOrder)
-  .patch(controllers.updateOrder)
-  .delete(controllers.deleteOrder);
+  .get(validateMiddleware, controllers.getoneOrder)
+  .patch(validateMiddleware, controllers.updateOrder)
+  .delete(validateMiddleware, controllers.deleteOrder);
 
 export default routes;
