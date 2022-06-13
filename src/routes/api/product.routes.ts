@@ -5,7 +5,7 @@ import validateMiddleware from '../../middleware/authenticate';
 const routes = Router();
 routes
   .route('/')
-  .get( controllers.getAllProducts)
+  .get(controllers.getAllProducts)
   .post(controllers.createProduct);
 routes
   .route('/:id')

@@ -7,9 +7,14 @@ class ProductModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `INSERT INTO products (name, price,category values ($1, $2, $3) RETURNING *`;
+      const sql = `INSERT INTO products (name,description,price,category) values ($1, $2, $3 ,$4) RETURNING *`;
       //run query
-      const result = await cnx.query(sql, [p.name, p.price, p.category]);
+      const result = await cnx.query(sql, [
+        p.name,
+        p.description,
+        p.price,
+        p.category,
+      ]);
       //close cnx
       cnx.release();
       //return created user
@@ -58,9 +63,15 @@ class ProductModel {
   async updateProduct(p: Product): Promise<Product> {
     try {
       const cnx = await db.connect();
-      const sql = `UPDATE products SET name=$1, price=$2, category=$3  WHERE id=($4) RETURNING *`;
+      const sql = `UPDATE products SET name=$2 ,description=$3 ,price=$4, category=$5 WHERE id=($1) RETURNING *`;
       //run query
-      const result = await cnx.query(sql, [p.name, p.price, p.category, p.id]);
+      const result = await cnx.query(sql, [
+        p.id,
+        p.name,
+        p.description,
+        p.price,
+        p.category,
+      ]);
       cnx.release();
       return result.rows[0];
     } catch (error) {
