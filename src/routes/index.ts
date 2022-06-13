@@ -9,5 +9,4 @@ routes.use('/users', usersRoute);
 routes.use('/products', productsRoute);
 routes.use('/orders', ordersRoute);
 
-
 export default routes;

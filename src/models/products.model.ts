@@ -7,7 +7,7 @@ class ProductModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `INSERT INTO products (name, price,category `;
+      const sql = `INSERT INTO products (name, price,category values ($1, $2, $3) RETURNING *`;
       //run query
       const result = await cnx.query(sql, [p.name, p.price, p.category]);
       //close cnx
@@ -42,7 +42,7 @@ class ProductModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `SELECT id ,name, price,category from products WHERE id=($1)`;
+      const sql = `SELECT * from products WHERE id=($1)`;
       //run query
 
       const result = await cnx.query(sql, [id]);
@@ -58,7 +58,7 @@ class ProductModel {
   async updateProduct(p: Product): Promise<Product> {
     try {
       const cnx = await db.connect();
-      const sql = `UPDATE products SET name=$1, price=$2, category=$3  WHERE id=($4) RETURNING id, email, user_name, first_name, last_name`;
+      const sql = `UPDATE products SET name=$1, price=$2, category=$3  WHERE id=($4) RETURNING *`;
       //run query
       const result = await cnx.query(sql, [p.name, p.price, p.category, p.id]);
       cnx.release();
@@ -76,7 +76,7 @@ class ProductModel {
     try {
       //opn cnx
       const cnx = await db.connect();
-      const sql = `DELETE FROM products WHERE id= ($1) RETURNING id, name, price,category`;
+      const sql = `DELETE FROM products WHERE id= ($1) RETURNING *`;
       //run query
 
       const result = await cnx.query(sql, [id]);

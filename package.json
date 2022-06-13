@@ -6,7 +6,7 @@
   "scripts": {
     "test": "set ENV=test && db-migrate up --env test &&  tsc && jasmine && db-migrate reset",
     "dev": "nodemon ./src/server.ts",
-    "clean": "rimraf build/",
+    "rmv": "rimraf build/",
     "build": "yarn clean && npx tsc",
     "start": "npm run build && nodemon build/index.js",
     "format": "prettier --write src/**/*.{ts,tsx,js,jsx}",
