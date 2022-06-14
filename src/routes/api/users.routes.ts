@@ -3,10 +3,13 @@ import * as controllers from '../../controllers/users.controllers';
 import validateMiddleware from '../../middleware/authenticate';
 
 const routes = Router();
-routes.route('/').get(controllers.getAll).post(controllers.create);
+routes
+  .route('/')
+  .get(validateMiddleware, controllers.getAll)
+  .post(validateMiddleware, controllers.create);
 routes
   .route('/:id')
-  .get(controllers.getUser)
+  .get(validateMiddleware, controllers.getUser)
   .patch(controllers.update)
   .delete(controllers.deleteUser);
 

@@ -3,7 +3,7 @@ import * as controllers from '../../controllers/order-products.controller';
 import validateMiddleware from '../../middleware/authenticate';
 
 const routes = Router();
-routes.route('/:id').post(controllers.create);
+routes.route('/orders/:id/products').post(controllers.create);
 routes
   .route('/:id/products/:id')
   .get(controllers.show)
