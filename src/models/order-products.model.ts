@@ -2,24 +2,21 @@ import db from '../database/database';
 import OrderProduct from '../types/order-product.type';
 
 class OrderProductModel {
-  async create(oP: OrderProduct): Promise<OrderProduct> {
+  async create(
+    quantity: number,
+    orderId: string,
+    productId: string
+  ): Promise<OrderProduct> {
     try {
-      const connection = await db.connect();
+      const conn = await db.connect();
       const sql =
-        'INSERT INTO order_products (quantity, order_id, product_id) values ($1, $2, $3) RETURNING *';
-
-      const result = await connection.query(sql, [
-        oP.quantity,
-        oP.orderId,
-        oP.productId,
-      ]);
-
-      connection.release();
-
+        'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *';
+      const result = await conn.query(sql, [quantity, orderId, productId]);
+      conn.release();
       return result.rows[0];
     } catch (error) {
       throw new Error(
-        `Could not create product: ${oP.productId} to order: ${
+        `Could not create product: ${productId} to order: ${orderId} ${
           (error as Error).message
         }`
       );

@@ -8,8 +8,15 @@ export const create = async (
   res: Response,
   next: NextFunction
 ) => {
+  const orderId: string = req.params.id;
+  const productId: string = req.body.product_id;
+  const quantity: number = parseInt(req.body.quantity);
   try {
-    const orderProduct = await orderProductModel.create(req.body);
+    const orderProduct = await orderProductModel.create(
+      quantity,
+      orderId,
+      productId
+    );
     res.json({
       status: 'success',
       data: { ...orderProduct },
