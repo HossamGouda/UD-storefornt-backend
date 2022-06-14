@@ -1,11 +1,11 @@
 # Storefront project UDacity Nanodgree
 
-1-`yarn` or `npm install`
-2- yarn dev to start the server on port 7777
+1-`yarn` or `npm install` to insatll project dependencies.
+2- yarn dev to start the server on port 5555
 3- Env Variables as the following :
 
 ```
-PORT=7777
+PORT=555
 
 ENV=dev
 #database info
@@ -24,11 +24,44 @@ available endpoints are (products,users,orders)
 
 ## Token and Authentication
 
-I have aproblem with it to pass with products and orders
+added as a middle ware and passed to requested routes to authenticated.
+
+## innitaing the databases in dev mode
+
+npx migrate up
+
+# Available Endpoints.
+
+### Users Endpoint
+
+- /users to get and post users.
+- /users/id to get secifc user.
+- /users/auth for authentciation.
+
+### Products Endpoint
+
+- /products to get and post products.
+- /products/id to get secifc user.
+- /products/auth for authentciation.
+
+### orders Endpoint
+
+- /orders to get and post products.
+- /orders/id to get secifc user.
+- /orders/auth for authentciation.
+
+### order_Products
+
+- /order-products/orders/id/products to create order.
+- - /order-products/orders/id/products/id to show and update and delete products.
+
+## in testing
+
+The test command `npm run test` will build the schema and test the comiled files in the build/src.
 
 ## Testing
 
-simple test for the main route.
+npm run test
 
 ## Resources & Credits
 
@@ -45,3 +78,5 @@ simple test for the main route.
 6-https://www.youtube.com/watch?v=qw--VYLpxG4&t=3249s
 
 7-https://www.youtube.com/watch?v=7nafaH9SddU&t=1039s
+
+8- https://github.com/atwamahmoud/storefront-api.git

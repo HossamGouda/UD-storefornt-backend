@@ -7,8 +7,8 @@ routes.route('/orders/:id/products').post(controllers.create);
 routes
   .route('/:id/products/:id')
   .get(controllers.show)
-  .patch(controllers.updateOrder)
-  .delete(controllers.deleteOrder);
+  .patch(validateMiddleware, controllers.updateOrder)
+  .delete(validateMiddleware, controllers.deleteOrder);
 routes.route('/:id/products').get(controllers.getoneOrder);
 
 export default routes;
