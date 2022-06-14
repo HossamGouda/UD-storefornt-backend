@@ -69,8 +69,8 @@ export const deleteOrder = async (
 ) => {
   try {
     const orderProduct = await orderProductModel.delete(
-      req.body.orderId,
-      req.body.productId
+      req.body.order_id,
+      req.body.product_id
     );
     res.json({
       status: 'success',
