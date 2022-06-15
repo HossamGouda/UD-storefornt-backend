@@ -6,7 +6,7 @@ const routes = Router();
 routes
   .route('/')
   .get(controllers.getAllProducts)
-  .post(validateMiddleware, controllers.createProduct);
+  .post(controllers.createProduct);
 routes
   .route('/:id')
   .get(controllers.getoneProduct)

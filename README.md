@@ -1,8 +1,12 @@
-# Storefront project UDacity Nanodgree
+# Storefront project UDacity Nanodgree.
+
+This is a part of Udacity Nanodgree Course for developing a backend server with the Following technologies (Postgres,db-migrate , dotenv , express, jsonwebtoken , Node js , TypeScript ,Jasmine Unite Test, supertest )
 
 1-`yarn` or `npm install` to insatll project dependencies.
 2- yarn dev to start the server on port 5555
 3- Env Variables as the following :
+
+# ENV VARIABLES EXAMPLES
 
 ```
 PORT=555
@@ -20,8 +24,6 @@ SALT_ROUNDS=10,
 TOKEN_SECRET=secret-token
 ```
 
-available endpoints are (products,users,orders)
-
 ## Token and Authentication
 
 added as a middle ware and passed to requested routes to authenticated.
@@ -30,40 +32,149 @@ added as a middle ware and passed to requested routes to authenticated.
 
 npx migrate up
 
-# Available Endpoints.
+Available endpoints are (products ,users , orders)
 
-### Users Endpoint
+# API Endpoints
 
-- /users to get and post users.
-- /users/id to get secifc user.
-- /users/auth for authentciation.
+#### Users
 
-### Products Endpoint
+- Index [token required]: `'users/' [GET] (token)`
+- Show [token required]: `'users/:id' [GET] (token)`
+- Create (args: User)[token required]: `'users/' [POST] (token)`
+- Update order (args: new user data)[token required]: `'users/:id [PATCH] (token)`
+- Delete [token required]: `'users/:id' [DELETE] (token)`
 
-- /products to get and post products.
-- /products/id to get secifc user.
-- /products/auth for authentciation.
+#### Products
 
-### orders Endpoint
+- Index: `'products/' [GET]`
+- Show: `'products/:id' [GET]`
+- Create (args: Product)[token required]: `'products/' [POST] (token)`
+- Update order (args: new order data)[token required]: `'products/:id [PATCH] (token)`
+- Delete: `'products/:id [DELETE]`
 
-- /orders to get and post products.
-- /orders/id to get secifc user.
-- /orders/auth for authentciation.
+#### Orders
 
-### order_Products
+- Index [token required]: `'orders/' [GET] (token)`
+- Create [token required]: `'orders/' [POST] (token)`
+- Show Order by user [token required]: `'orders/:id' [GET] (token)`
+- Update order [token required]: `'orders/:id [PUT] (token)`
+- Delete [token required]: `'orders/:id [DELETE] (token)`
+
+### Order-Products
 
 - /order-products/orders/id/products to create order.
-- - /order-products/orders/id/products/id to show and update and delete products.
+- /order-products/orders/id/products/id to show and update and delete products.
 
-## in testing
+# Databas Schema
+
+### Users Schema
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(60) UNIQUE,
+    user_name VARCHAR(60) NOT NULL,
+    first_name VARCHAR(60) NOT NULL,
+    last_name VARCHAR(60) NOT NULL,
+    password  VARCHAR(255) NOT NULL
+
+);
+
+ALTER SEQUENCE users_id_seq RESTART WITH 1;
+```
+
+### Products Schema
+
+```sql
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(60) NOT NULL,
+    description VARCHAR(255),
+    price integer NOT NULL,
+    category VARCHAR(150) NOT NULL
+
+);
+```
+
+### Orders Schema
+
+```sql
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(100),
+    user_id bigint NOT NULL REFERENCES users(id)
+);
+```
+
+### orders-Products Schema
+
+```sql
+CREATE TABLE order_products (
+    id SERIAL PRIMARY KEY,
+    quantity integer,
+    order_id BIGINT REFERENCES orders(id) NOT NULL,
+    product_id bigint REFERENCES products(id)
+);
+```
+
+## Data Shapes
+
+### User
+
+```typescript
+type User = {
+  id?: number;
+  email: string;
+  user_name: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+};
+```
+
+### Product
+
+```typescript
+type Product = {
+  id?: number;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+};
+```
+
+### Order
+
+```typescript
+type Order = {
+  id?: number;
+  status: string;
+  user_id: number;
+};
+```
+
+### Order Product
+
+```typescript
+type OrderProduct = {
+  id?: number;
+  quantity: number;
+  orderId: string;
+  productId: string;
+  products?: Product[];
+};
+```
+
+# Testing
 
 The test command `npm run test` will build the schema and test the comiled files in the build/src.
 
-## Testing
+## Testing commad
 
-npm run test
+`npm run test`
 
-## Resources & Credits
+### Resources & Credits
 
 1-https://www.yonisfy.com/udacity/projects/build-store-front-backend.
 
