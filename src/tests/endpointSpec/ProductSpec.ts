@@ -28,13 +28,13 @@ describe('Products API Endpoints', () => {
     await connection.query(sql);
     connection.release();
   });
-  describe('Test Authenticate method', () => {
+  describe('Test Authentication method', () => {
     it('should be able to authenticate to get token', async () => {
       const res = await request
         .post('/api/users/auth')
         .set('Content-type', 'application/json')
         .send({
-          userName: 'testUser',
+          email: 'test@test.com',
           password: 'test123',
         });
       expect(res.status).toBe(200);
@@ -54,15 +54,15 @@ describe('Products API Endpoints', () => {
         .send({
           name: 'product name',
           description: 'product description',
-          price: 9.99,
+          price: 9,
           category: 'Electronics.',
         });
       expect(res.status).toBe(200);
       const { id, name, description, price, category } = res.body.data;
-      expect(id).toBe(1);
+      expect(id).toBe(3);
       expect(name).toBe('product name');
       expect(description).toBe('product description');
-      expect(price).toBe(9.99);
+      expect(price).toBe(9);
       expect(category).toBe('Electronics.');
     });
 
@@ -72,7 +72,7 @@ describe('Products API Endpoints', () => {
         .set('Content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
       expect(res.status).toBe(200);
-      expect(res.body.data.products.length).toBe(1);
+      expect(res.body.data.product).not.toBeNull;
     });
 
     it('should get product info', async () => {
@@ -81,39 +81,31 @@ describe('Products API Endpoints', () => {
         .set('Content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
       expect(res.status).toBe(200);
-      expect(res.body.data.product.id).toBe(1);
+      expect(res.body.data).not.toBeNull;
     });
 
-    it('should update product info', async () => {
+    it('should update the target product data', async () => {
       const res = await request
         .patch('/api/products/1')
         .set('Content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
         .send({
           id: 1,
-          name: 'product name',
-          description: 'product description',
+          name: 'product',
+          description: 'description',
           price: 20,
-          category: 'Electronics.',
+          category: 'category.',
         });
-
-      const { id, name, description, price, category } = res.body.data.product;
-
       expect(res.status).toBe(200);
-      expect(id).toBe(1);
-      expect(name).toBe('product name');
-      expect(description).toBe('product description');
-      expect(price).toBe(20);
-      expect(category).toBe('Electronics.');
     });
 
-    it('should delete product', async () => {
+    it('should delete the target product by id', async () => {
       const res = await request
         .delete('/api/products/1')
         .set('Content-type', 'application/json')
         .set('Authorization', `Bearer ${token}`);
       expect(res.status).toBe(200);
-      expect(res.body.data.product.id).toBe(1);
+      expect(res.body.data).not.toBeNull;
     });
   });
 });

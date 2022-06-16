@@ -6,3 +6,4 @@ CREATE TABLE products (
     category VARCHAR(150) NOT NULL
 
 );
+ALTER SEQUENCE products_id_seq RESTART WITH 1;

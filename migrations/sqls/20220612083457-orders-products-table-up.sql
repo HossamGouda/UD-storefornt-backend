@@ -5,3 +5,5 @@ CREATE TABLE order_products (
     product_id bigint REFERENCES products(id)
 );
 
+ALTER TABLE order_products ADD FOREIGN KEY (order_id)
+REFERENCES orders(id) ON DELETE CASCADE;

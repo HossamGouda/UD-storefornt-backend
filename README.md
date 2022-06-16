@@ -62,8 +62,11 @@ Available endpoints are (products ,users , orders)
 
 ### Order-Products
 
-- /order-products/orders/id/products to create order.
-- /order-products/orders/id/products/id to show and update and delete products.
+- Create [token required]: `'/order-products/orders/:id/products' [POST] (token)`
+- Index [token required]: `'order-products/orders/:id/products/:id' [GET] (token)`
+- Show Order by user [token required]: `'order-products/orders/:id/products/:id' [GET] (token)`
+- Update order [token required]: `'order-products/orders/:id/products/:id' [PATCH] (token)`
+  -Delete [token required]: `'order-products/orders/:id/products/:id' [DELETE] (token)`
 
 # Databas Schema
 
