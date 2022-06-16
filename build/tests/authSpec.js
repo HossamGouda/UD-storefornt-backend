@@ -57,13 +57,11 @@ describe('Auth Module', function () {
             password: '123',
         };
         beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
-            var newUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, userModel.create(user)];
                     case 1:
-                        newUser = _a.sent();
-                        user.id = newUser.id;
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -75,7 +73,7 @@ describe('Auth Module', function () {
                     case 0: return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = 'DELETE FROM users;';
+                        sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
                         return [4 /*yield*/, connection.query(sql)];
                     case 2:
                         _a.sent();
@@ -103,7 +101,7 @@ describe('Auth Module', function () {
             var authenticated;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userModel.auth('h@gouda.com', 'test 123')];
+                    case 0: return [4 /*yield*/, userModel.auth('fakemail@mail.com', 'fake')];
                     case 1:
                         authenticated = _a.sent();
                         expect(authenticated).toBe(null);

@@ -25,13 +25,14 @@ describe('Users API Endpoints', () => {
   afterAll(async () => {
     // clean db
     const connection = await db.connect();
-    const sql = 'DELETE FROM users;';
+    const sql =
+      'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
     await connection.query(sql);
     connection.release();
   });
 
   describe('Test Authenticate methods', () => {
-    it('should be able to authenticate to get token', async () => {
+    it('should be able to authenticate to get token back', async () => {
       const res = await request
         .post('/api/users/auth')
         .set('Content-type', 'application/json')
@@ -50,8 +51,9 @@ describe('Users API Endpoints', () => {
       const res = await request
         .post('/api/users/auth')
         .set('Content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
         .send({
-          email: 'wrong@email.com',
+          email: 'wrongmail@email.com',
           password: 'test123',
         });
       expect(res.status).toBe(401);
@@ -105,18 +107,18 @@ describe('Users API Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({
           ...user,
-          user_name: 'mohammedelzanaty',
-          first_name: 'Mohammed',
-          last_name: 'Elzanaty',
+          user_name: 'HossamGouda',
+          first_name: 'Hossam',
+          last_name: 'Gouda',
         });
       expect(res.status).toBe(200);
 
       const { id, email, user_name, first_name, last_name } = res.body.data;
       expect(id).toBe(user.id);
       expect(email).toBe(user.email);
-      expect(user_name).toBe('mohammedelzanaty');
-      expect(first_name).toBe('Mohammed');
-      expect(last_name).toBe('Elzanaty');
+      expect(user_name).toBe('HossamGouda');
+      expect(first_name).toBe('Hossam');
+      expect(last_name).toBe('Gouda');
     });
 
     it('should delete user', async () => {
@@ -126,7 +128,7 @@ describe('Users API Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
       expect(res.status).toBe(200);
       expect(res.body.data.id).toBe(user.id);
-      expect(res.body.data.user_name).toBe('mohammedelzanaty');
+      expect(res.body.data.user_name).toBe('HossamGouda');
     });
   });
 });

@@ -84,7 +84,7 @@ describe('Users API Endpoints', function () {
                 case 0: return [4 /*yield*/, database_1.default.connect()];
                 case 1:
                     connection = _a.sent();
-                    sql = 'DELETE FROM users;';
+                    sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
                     return [4 /*yield*/, connection.query(sql)];
                 case 2:
                     _a.sent();
@@ -94,7 +94,7 @@ describe('Users API Endpoints', function () {
         });
     }); });
     describe('Test Authenticate methods', function () {
-        it('should be able to authenticate to get token', function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('should be able to authenticate to get token back', function () { return __awaiter(void 0, void 0, void 0, function () {
             var res, _a, id, email, userToken;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -123,8 +123,9 @@ describe('Users API Endpoints', function () {
                     case 0: return [4 /*yield*/, request
                             .post('/api/users/auth')
                             .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
                             .send({
-                            email: 'wrong@email.com',
+                            email: 'wrongmail@email.com',
                             password: 'test123',
                         })];
                     case 1:
@@ -204,16 +205,16 @@ describe('Users API Endpoints', function () {
                             .patch("/api/users/".concat(user.id))
                             .set('Content-type', 'application/json')
                             .set('Authorization', "Bearer ".concat(token))
-                            .send(__assign(__assign({}, user), { user_name: 'mohammedelzanaty', first_name: 'Mohammed', last_name: 'Elzanaty' }))];
+                            .send(__assign(__assign({}, user), { user_name: 'HossamGouda', first_name: 'Hossam', last_name: 'Gouda' }))];
                     case 1:
                         res = _b.sent();
                         expect(res.status).toBe(200);
                         _a = res.body.data, id = _a.id, email = _a.email, user_name = _a.user_name, first_name = _a.first_name, last_name = _a.last_name;
                         expect(id).toBe(user.id);
                         expect(email).toBe(user.email);
-                        expect(user_name).toBe('mohammedelzanaty');
-                        expect(first_name).toBe('Mohammed');
-                        expect(last_name).toBe('Elzanaty');
+                        expect(user_name).toBe('HossamGouda');
+                        expect(first_name).toBe('Hossam');
+                        expect(last_name).toBe('Gouda');
                         return [2 /*return*/];
                 }
             });
@@ -230,7 +231,7 @@ describe('Users API Endpoints', function () {
                         res = _a.sent();
                         expect(res.status).toBe(200);
                         expect(res.body.data.id).toBe(user.id);
-                        expect(res.body.data.user_name).toBe('mohammedelzanaty');
+                        expect(res.body.data.user_name).toBe('HossamGouda');
                         return [2 /*return*/];
                 }
             });

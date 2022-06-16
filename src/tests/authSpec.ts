@@ -21,13 +21,13 @@ describe('Auth Module', () => {
     } as User;
 
     beforeAll(async () => {
-      const newUser = await userModel.create(user);
-      user.id = newUser.id;
+      await userModel.create(user);
     });
 
     afterAll(async () => {
       const connection = await db.connect();
-      const sql = 'DELETE FROM users;';
+      const sql =
+        'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
       await connection.query(sql);
       connection.release();
     });
@@ -44,7 +44,7 @@ describe('Auth Module', () => {
     });
 
     it('Auth method should return null for not auth users', async () => {
-      const authenticated = await userModel.auth('h@gouda.com', 'test 123');
+      const authenticated = await userModel.auth('fakemail@mail.com', 'fake');
       expect(authenticated).toBe(null);
     });
   });

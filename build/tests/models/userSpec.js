@@ -53,7 +53,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var user_model_1 = __importDefault(require("../../models/user.model"));
 var database_1 = __importDefault(require("../../database/database"));
 var userModel = new user_model_1.default();
-describe('User Model', function () {
+describe('Test User Model', function () {
     describe('Test methods in the user model', function () {
         it('should return all users', function () {
             expect(userModel.getAll).toBeDefined();
@@ -76,11 +76,11 @@ describe('User Model', function () {
     });
     describe('Test User Model Logic', function () {
         var user = {
-            email: 'gouda@h.com',
-            user_name: 'hos',
-            first_name: 'Hossam',
-            last_name: 'Gouda',
-            password: '321',
+            email: 'test1@test1.com',
+            user_name: 'test',
+            first_name: 'test1',
+            last_name: 'last1',
+            password: 'test123',
         };
         beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
             var createdUser;
@@ -101,7 +101,7 @@ describe('User Model', function () {
                     case 0: return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = 'DELETE FROM users;';
+                        sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;';
                         return [4 /*yield*/, connection.query(sql)];
                     case 2:
                         _a.sent();
@@ -115,20 +115,20 @@ describe('User Model', function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, userModel.create({
-                            email: 'a@b.com',
-                            user_name: 'ab',
-                            first_name: 'a',
-                            last_name: 'b',
-                            password: '123',
+                            email: 'test2@test2.com',
+                            user_name: 'test2',
+                            first_name: 'test2',
+                            last_name: 'last2',
+                            password: 'test1234',
                         })];
                     case 1:
                         newUser = _a.sent();
                         expect(newUser).toEqual({
                             id: newUser.id,
-                            email: 'a@b.com',
-                            user_name: 'ab',
-                            first_name: 'a',
-                            last_name: 'b',
+                            email: 'test2@test2.com',
+                            user_name: 'test2',
+                            first_name: 'test2',
+                            last_name: 'last2',
                         });
                         return [2 /*return*/];
                 }
@@ -166,14 +166,14 @@ describe('User Model', function () {
             var updatedUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userModel.updateUser(__assign(__assign({}, user), { user_name: 'updated', first_name: 'h', last_name: 'G' }))];
+                    case 0: return [4 /*yield*/, userModel.updateUser(__assign(__assign({}, user), { user_name: 'test1 update', first_name: 'Hossam', last_name: 'Gouda' }))];
                     case 1:
                         updatedUser = _a.sent();
                         expect(updatedUser.id).toBe(user.id);
                         expect(updatedUser.email).toBe(user.email);
-                        expect(updatedUser.user_name).toBe('updated');
-                        expect(updatedUser.first_name).toBe('h');
-                        expect(updatedUser.last_name).toBe('G');
+                        expect(updatedUser.user_name).toBe('test1 update');
+                        expect(updatedUser.first_name).toBe('Hossam');
+                        expect(updatedUser.last_name).toBe('Gouda');
                         return [2 /*return*/];
                 }
             });

@@ -24,7 +24,7 @@ describe('Products API Endpoints', () => {
     // clean db
     const connection = await db.connect();
     const sql =
-      'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;\nDELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1';
+      'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;\nDELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;';
     await connection.query(sql);
     connection.release();
   });
@@ -55,15 +55,14 @@ describe('Products API Endpoints', () => {
           name: 'product name',
           description: 'product description',
           price: 9,
-          category: 'Electronics.',
+          category: 'category.',
         });
       expect(res.status).toBe(200);
-      const { id, name, description, price, category } = res.body.data;
-      expect(id).toBe(3);
+      const { name, description, price, category } = res.body.data;
       expect(name).toBe('product name');
       expect(description).toBe('product description');
       expect(price).toBe(9);
-      expect(category).toBe('Electronics.');
+      expect(category).toBe('category.');
     });
 
     it('should get list of products', async () => {

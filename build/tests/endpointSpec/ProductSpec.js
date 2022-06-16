@@ -73,7 +73,7 @@ describe('Products API Endpoints', function () {
                 case 0: return [4 /*yield*/, database_1.default.connect()];
                 case 1:
                     connection = _a.sent();
-                    sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;\nDELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1';
+                    sql = 'DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;\nDELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;';
                     return [4 /*yield*/, connection.query(sql)];
                 case 2:
                     _a.sent();
@@ -108,7 +108,7 @@ describe('Products API Endpoints', function () {
     });
     describe('Test CRUD API methods', function () {
         it('should create new product', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var res, _a, id, name, description, price, category;
+            var res, _a, name, description, price, category;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, request
@@ -119,17 +119,16 @@ describe('Products API Endpoints', function () {
                             name: 'product name',
                             description: 'product description',
                             price: 9,
-                            category: 'Electronics.',
+                            category: 'category.',
                         })];
                     case 1:
                         res = _b.sent();
                         expect(res.status).toBe(200);
-                        _a = res.body.data, id = _a.id, name = _a.name, description = _a.description, price = _a.price, category = _a.category;
-                        expect(id).toBe(3);
+                        _a = res.body.data, name = _a.name, description = _a.description, price = _a.price, category = _a.category;
                         expect(name).toBe('product name');
                         expect(description).toBe('product description');
                         expect(price).toBe(9);
-                        expect(category).toBe('Electronics.');
+                        expect(category).toBe('category.');
                         return [2 /*return*/];
                 }
             });
